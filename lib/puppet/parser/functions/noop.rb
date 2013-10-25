@@ -2,7 +2,7 @@
 Puppet::Parser::Functions::newfunction(:noop, :doc => "Set noop default to true for all resources
   in local scope and children scopes. This can be overriden in 
   child scopes, or explicitly on each resource.
-  ") do
+  ") do |args|
 
   class << self
     def lookupdefaults(type)
