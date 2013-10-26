@@ -1,0 +1,6 @@
+name         'trlinkin-noop'
+version      '0.0.2'
+author       'trlinkin'
+license      'Apache License, Version 2.0'
+summary      'A Puppet DSL noop function for setting a whole scope to noop.'
+project_page 'https://github.com/trlinkin/trlinkin-noop'
