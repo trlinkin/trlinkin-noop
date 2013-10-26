@@ -1,5 +1,6 @@
 Noop
 ====
+[![Build Status](https://travis-ci.org/trlinkin/trlinkin-noop.png?branch=master)](https://travis-ci.org/trlinkin/trlinkin-noop)
 
 A Puppet DSL `noop` function for setting a whole scope to noop.
 
