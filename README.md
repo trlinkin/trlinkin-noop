@@ -6,7 +6,7 @@ A Puppet DSL `noop()` function for setting a whole scope to noop.
 
 Usage
 -----
-This is a statement function that accepts no arguments. It can be called at any scope. It's effects will propagate into child scopes.
+This is a statement function that accepts no arguments. It can be called at any scope. Its effects will propagate into child scopes.
 
     class ssh {
 	
