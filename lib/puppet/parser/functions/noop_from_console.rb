@@ -9,9 +9,9 @@ Puppet::Parser::Functions::newfunction(
 
   group_vars = args
 
-  node = self.compiler.node.name
+  node = self.compiler.node
 
-  terminus_config = Puppet::Node::Classifier.load_config
+  terminus_config = Puppet::Node::Classifier.load_config.first
 
   config = {
     "ca_certificate_path" => Puppet['localcacert'],
@@ -19,15 +19,20 @@ Puppet::Parser::Functions::newfunction(
     "private_key_path"    => Puppet['hostprivkey'],
   }
 
-  client = PuppetClassify.new("https://#{terminus_config['server']}:#{terminus_config['port']}/#{terminus_config['prefix']}", config)
+  client = PuppetClassify.new("https://#{terminus_config[:server]}:#{terminus_config[:port]}#{terminus_config[:prefix]}", config)
 
-  group_list = client.classification.get(node)['groups']
+  facts = {
+    "fact" => node.facts.to_data_hash['values'],
+    "trusted" => node.trusted_data
+  }
+
+  group_list = client.classification.get(node.name, facts)['groups']
 
   group_list.each do |group|
     content = client.groups.get_group(group)
     content["variables"].each do |var|
       if group_vars.include? var
-        scope.call_function(:noop_by_class,content['classes'].keys)
+        call_function(:noop_by_class,content['classes'].keys)
       end
     end
   end
