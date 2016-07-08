@@ -2,9 +2,20 @@ require 'puppetclassify'
 # Set noop to true as default for current and children scopes
 Puppet::Parser::Functions::newfunction(
   :noop_from_console,
-  :doc => "Set noop default to true for all resources
-  in local scope and children scopes. This can be overriden in
-  child scopes, or explicitly on each resource."
+  :doc => <<-'EOT'
+    Set classes to run in "noop" mode based on classification from the
+    Enterprise console.
+
+    This function will check the classifier groups a node matches for
+    classification and check to see if a specific variable is set. If the variable
+    this function is told to watch for is set to any value, the classes associated
+    to the classifier group will be set to run in "noop" mode using the
+    "noop_by_class()" function.
+
+    The vairable(s) to be watched for by this function can be passes as string arguments.
+
+    If no variable names are passed, the default of variable name of "noop" is used.
+    EOT
   ) do |args|
 
   group_vars = args
