@@ -8,6 +8,9 @@ Puppet::Parser::Functions::newfunction(
   ) do |args|
 
   group_vars = args
+  if group_vars.count == 0
+    group_vars << 'noop'
+  end
 
   node = self.compiler.node
 
@@ -30,7 +33,7 @@ Puppet::Parser::Functions::newfunction(
 
   group_list.each do |group|
     content = client.groups.get_group(group)
-    content["variables"].each do |var|
+    content["variables"].keys.each do |var|
       if group_vars.include? var
         call_function(:noop_by_class,content['classes'].keys)
       end
