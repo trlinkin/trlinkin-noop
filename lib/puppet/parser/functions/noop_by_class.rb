@@ -1,8 +1,15 @@
 # Set noop to true as default for current and children scopes
-Puppet::Parser::Functions::newfunction(:noop_by_class, :doc => "Set noop default to true for all resources
-  in local scope and children scopes. This can be overriden in
-  child scopes, or explicitly on each resource.
-  ") do |arguments|
+Puppet::Parser::Functions::newfunction(:noop_by_class, :doc => <<-'EOT'
+  Set resources in a scope to be run as "noop" by the name of the class.
+
+  This method is expecting to receive at least one argument as a string. The
+  argument should be the name of a class that will appear in the catalog. This
+  function will ensure that the class scope identified will be set to "noop" by
+  using the original "noop()" function.
+
+  Since the original "noop()" method is used, the behaviors of that function apply.
+  EOT
+  ) do |arguments|
 
   raise(Puppet::ParseError, 'noop_by_class(): requires at least one argument') if arguments.length == 0
 
