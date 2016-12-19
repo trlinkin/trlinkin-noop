@@ -6,7 +6,7 @@ A Puppet DSL `noop()` function for setting a whole scope to noop.
 
 ## Usage
 
-This is a statement function that accepts no arguments. It can be called at any
+This is a statement function that accepts zero or one arguments. It can be called at any
 scope. Its effects will propagate into child scopes.
 
 ```puppet
@@ -32,6 +32,9 @@ class ssh {
 The outcome of the usage in the example above will be equivalent to setting
 `noop => true` as a default for each resource. None of the resources in
 `Class['ssh']` will be enforced.
+
+For granular control, noop(false) will 'reset' the default inhereted noop value
+
 
 ## License
 
