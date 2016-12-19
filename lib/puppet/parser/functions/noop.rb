@@ -3,7 +3,7 @@ Puppet::Parser::Functions::newfunction(:noop, :doc => "Set noop default to true 
   in local scope and children scopes. This can be overriden in
   child scopes, or explicitly on each resource.
   ") do |args|
-      @noop_value = true if (@noop_value = args[0]).nil?
+      @noop_value = true if (@noop_value = args[0]).nil? or (![true, false].include? @noop_value)
   class << self
     def lookupdefaults(type)
       values = super(type)
