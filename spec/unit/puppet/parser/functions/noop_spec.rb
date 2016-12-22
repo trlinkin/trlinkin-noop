@@ -16,7 +16,7 @@ describe Puppet::Parser::Functions.function(:noop) do
 
     catalog = scope.compiler.compile
 
-    expect(catalog.resource('File[/tmp/foo]')[:noop]).to eq('true')
+    expect(catalog.resource('File[/tmp/foo]')[:noop]).to eq(true)
 
   end
   
@@ -28,7 +28,7 @@ describe Puppet::Parser::Functions.function(:noop) do
 
     catalog = scope.compiler.compile
 
-    expect { catalog.resource('File[/tmp/foo]')[:noop] }.to be_false
+    expect(catalog.resource('File[/tmp/foo]')[:noop]).to eq(false)
   end
 
   it "should give every resource in child scopes a default of 'noop => true'" do
@@ -42,7 +42,7 @@ describe Puppet::Parser::Functions.function(:noop) do
 
     catalog = scope.compiler.compile
 
-    expect(catalog.resource('File[/tmp/foo]')[:noop]).to eq('true')
+    expect(catalog.resource('File[/tmp/foo]')[:noop]).to eq(true)
   end
 
 end
