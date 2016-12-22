@@ -1,5 +1,3 @@
-#! /usr/bin/env/ruby -S rspec
-
 require 'spec_helper'
 
 describe Puppet::Parser::Functions.function(:noop) do
@@ -18,13 +16,14 @@ describe Puppet::Parser::Functions.function(:noop) do
 
     catalog = scope.compiler.compile
 
-    expect { catalog.resource('File[/tmp/foo]')[:noop] }.to be_true
+    expect(catalog.resource('File[/tmp/foo]')[:noop]).to eq('true')
+
   end
 
   it "should give every resource in child scopes a default of 'noop => true'" do
     Puppet[:code] = <<-NOOPCODE
       class test {
-        file { '/tmp/test_class':}
+        file { '/tmp/foo':}
       }
       include test
       noop()
@@ -32,6 +31,7 @@ describe Puppet::Parser::Functions.function(:noop) do
 
     catalog = scope.compiler.compile
 
-    expect { catalog.resource('File[/tmp/test_class]')[:noop] }.to be_true
+    expect(catalog.resource('File[/tmp/foo]')[:noop]).to eq('true')
   end
+
 end
