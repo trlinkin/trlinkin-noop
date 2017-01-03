@@ -31,13 +31,27 @@ describe Puppet::Parser::Functions.function(:noop) do
     expect(catalog.resource('File[/tmp/foo]')[:noop]).to eq(false)
   end
 
-  it "should give every resource in child scopes a default of 'noop => true'" do
+  it "should give every resource a default of 'noop => true' when arg0 is true" do
     Puppet[:code] = <<-NOOPCODE
       class test {
         file { '/tmp/foo':}
       }
       include test
-      noop()
+      noop(true)
+    NOOPCODE
+
+    catalog = scope.compiler.compile
+
+    expect(catalog.resource('File[/tmp/foo]')[:noop]).to eq(true)
+  end
+  
+  it "should give every resource a default of 'noop => true' when arg0 is non-bool" do
+    Puppet[:code] = <<-NOOPCODE
+      class test {
+        file { '/tmp/foo':}
+      }
+      include test
+      noop('potato')
     NOOPCODE
 
     catalog = scope.compiler.compile
