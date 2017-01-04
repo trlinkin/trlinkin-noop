@@ -5,7 +5,7 @@ describe Puppet::Parser::Functions.function(:noop) do
 
   it "requires no arguments to compile" do
     Puppet[:code] = 'noop()'
-    scope.compiler.compile
+    expect{scope.compiler.compile}.to_not raise_error()
   end
 
   it "should give every resource a default of 'noop => true' when no argument is passed" do
