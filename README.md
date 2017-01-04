@@ -6,13 +6,14 @@ A Puppet DSL `noop()` function for setting a whole scope to noop.
 
 ## Usage
 
-This is a statement function that accepts no arguments. It can be called at any
+This is a statement function that accepts one optional Boolean argument. It can be called at any
 scope. Its effects will propagate into child scopes.
 
 ```puppet
 class ssh {
 
   noop()
+  include ssh::client
 
   package { 'openssh-server' :
     ensure => installed,
@@ -27,11 +28,20 @@ class ssh {
     require => Package['openssh-server'],
   }
 }
+
+class ssh::client {
+  noop(false)
+
+  file { '/etc/ssh/ssh_config':
+    ensure => file,
+  }
+}
 ```
 
-The outcome of the usage in the example above will be equivalent to setting
-`noop => true` as a default for each resource. None of the resources in
-`Class['ssh']` will be enforced.
+In the above example, none of the resources in
+`Class['ssh']` will be enforced but the resources in Class['ssh::client'] *WILL* be enforced because the default noop value is reset to false in the child's scope. Without `noop(false)` in `Class['ssh::client']`, the parent scope's default noop value would be inherited.
+
+
 
 ## License
 
