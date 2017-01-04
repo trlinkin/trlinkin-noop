@@ -45,7 +45,7 @@ describe Puppet::Parser::Functions.function(:noop) do
     expect(catalog.resource('File[/tmp/foo]')[:noop]).to eq(true)
   end
   
-  it "should give every resource a default of 'noop => true' when arg0 is non-bool" do
+  it "should raise an exception when first argument is not a boolean" do
     Puppet[:code] = <<-NOOPCODE
       class test {
         file { '/tmp/foo':}
@@ -54,9 +54,7 @@ describe Puppet::Parser::Functions.function(:noop) do
       noop('potato')
     NOOPCODE
 
-    catalog = scope.compiler.compile
-
-    expect(catalog.resource('File[/tmp/foo]')[:noop]).to eq(true)
+    expect{scope.compiler.compile}.to raise_error(Puppet::ParseError)
   end
 
 end
