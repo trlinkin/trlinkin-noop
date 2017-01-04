@@ -38,8 +38,11 @@ class ssh::client {
 }
 ```
 
-In the above example, none of the resources in
-`Class['ssh']` will be enforced but the resources in Class['ssh::client'] *WILL* be enforced because the default noop value is reset to false in the child's scope. Without `noop(false)` in `Class['ssh::client']`, the parent scope's default noop value would be inherited.
+In the above example, none of the resources in `Class['ssh']` will be enforced
+but the resources in Class['ssh::client'] *WILL* be enforced because the
+default noop value is reset to false in the child's scope. Without `noop(false)`
+in `Class['ssh::client']`, the parent scope's default noop value (as set with the `noop()`
+function) would be inherited.
 
 
 
