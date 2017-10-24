@@ -13,8 +13,9 @@ end
 
 group :development, :test do
   gem 'rake'
-  gem 'rspec', "~> 2.11.0", :require => false
-  gem 'mocha', "~> 0.10.5", :require => false
+  gem 'rspec', :require => false
+  gem 'rspec-puppet', '>= 2.3.2', :require => false
+  gem 'mocha', :require => false
   gem 'puppetlabs_spec_helper', :require => false
 end
 

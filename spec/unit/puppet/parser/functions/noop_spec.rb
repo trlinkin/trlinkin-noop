@@ -1,5 +1,3 @@
-#! /usr/bin/env/ruby -S rspec
-
 require 'spec_helper'
 
 describe Puppet::Parser::Functions.function(:noop) do
@@ -7,10 +5,10 @@ describe Puppet::Parser::Functions.function(:noop) do
 
   it "requires no arguments to compile" do
     Puppet[:code] = 'noop()'
-    scope.compiler.compile
+    expect{scope.compiler.compile}.to_not raise_error()
   end
 
-  it "should give every resource a default of 'noop => true'" do
+  it "should give every resource a default of 'noop => true' when no argument is passed" do
     Puppet[:code] = <<-NOOPCODE
       noop()
       file {'/tmp/foo':}
@@ -18,20 +16,45 @@ describe Puppet::Parser::Functions.function(:noop) do
 
     catalog = scope.compiler.compile
 
-    expect { catalog.resource('File[/tmp/foo]')[:noop] }.to be_true
+    expect(catalog.resource('File[/tmp/foo]')[:noop]).to eq(true)
+
   end
 
-  it "should give every resource in child scopes a default of 'noop => true'" do
+  it "should give every resource a default of 'noop => false' when the first argument is boolean false" do
     Puppet[:code] = <<-NOOPCODE
-      class test {
-        file { '/tmp/test_class':}
-      }
-      include test
-      noop()
+      noop(false)
+      file {'/tmp/foo':}
     NOOPCODE
 
     catalog = scope.compiler.compile
 
-    expect { catalog.resource('File[/tmp/test_class]')[:noop] }.to be_true
+    expect(catalog.resource('File[/tmp/foo]')[:noop]).to eq(false)
   end
+
+  it "should give every resource a default of 'noop => true' when the first argument is boolean true" do
+    Puppet[:code] = <<-NOOPCODE
+      class test {
+        file { '/tmp/foo':}
+      }
+      include test
+      noop(true)
+    NOOPCODE
+
+    catalog = scope.compiler.compile
+
+    expect(catalog.resource('File[/tmp/foo]')[:noop]).to eq(true)
+  end
+
+  it "should raise an exception when first argument is not a boolean" do
+    Puppet[:code] = <<-NOOPCODE
+      class test {
+        file { '/tmp/foo':}
+      }
+      include test
+      noop('potato')
+    NOOPCODE
+
+    expect{scope.compiler.compile}.to raise_error(Puppet::ParseError)
+  end
+
 end
