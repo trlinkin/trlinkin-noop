@@ -1,6 +1,6 @@
 {
   "name": "trlinkin-noop",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": "Thomas Linkin",
   "license": "Apache-2.0",
   "summary": "A Puppet DSL noop function for setting a whole scope to noop.",
