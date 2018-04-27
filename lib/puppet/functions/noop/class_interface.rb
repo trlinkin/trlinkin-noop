@@ -1,5 +1,4 @@
 Puppet::Functions.create_function(:"noop::class_interface", Puppet::Functions::InternalFunction) do
-
   dispatch :interface do
     scope_param
   end
@@ -33,5 +32,4 @@ Puppet::Functions.create_function(:"noop::class_interface", Puppet::Functions::I
 
     call_function('noop', noop_default)
   end
-
 end
