@@ -4,6 +4,10 @@
 
 A Puppet DSL `noop()` function for setting a whole scope to noop.
 
+##Compatibility Notice
+Versions of the module above 1.0.0 utilize the ["modern" Puppet Function Ruby API](https://puppet.com/docs/puppet/latest/functions_ruby_overview.html) and thus
+will not work on older versions of Puppet. Time to really explore upgrading from Puppet 3 I guess :)
+
 ## Usage
 
 This is a statement function that accepts one optional Boolean argument. It can be called at any
@@ -113,7 +117,7 @@ class profile::unannotated (
 
 ## License
 
-   Copyright 2012 Thomas Linkin <tom@puppetlabs.com>
+   Copyright 2012 Thomas Linkin <tom@puppet.com>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
