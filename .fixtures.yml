@@ -1,0 +1,4 @@
+fixtures:
+  symlinks:
+    noop: "#{source_dir}"
+    site_apache: "#{source_dir}/spec/fixtures/site_apache"

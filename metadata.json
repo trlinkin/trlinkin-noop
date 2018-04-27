@@ -2,13 +2,30 @@
   "name": "trlinkin-noop",
   "version": "0.2.0",
   "author": "Thomas Linkin",
-  "license": "Apache-2.0",
   "summary": "A Puppet DSL noop function for setting a whole scope to noop.",
+  "license": "Apache-2.0",
   "source": "https://github.com/trlinkin/trlinkin-noop",
   "project_page": "https://github.com/trlinkin/trlinkin-noop",
   "issues_url": "https://github.com/trlinkin/trlinkin-noop/issues",
-  "tags": ["noop", "parser", "function"],
-  "operatingsystem_support": [],
-  "dependencies": [],
-  "data_provider": "none"
+  "dependencies": [
+
+  ],
+  "data_provider": "none",
+  "operatingsystem_support": [
+
+  ],
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": ">= 4.7.0 < 6.0.0"
+    }
+  ],
+  "tags": [
+    "noop",
+    "parser",
+    "function"
+  ],
+  "pdk-version": "1.4.1",
+  "template-url": "file:///opt/puppetlabs/pdk/share/cache/pdk-templates.git",
+  "template-ref": "1.4.1-0-g52adbbb"
 }
