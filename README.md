@@ -4,7 +4,7 @@
 
 A Puppet DSL `noop()` function for setting a whole scope to noop.
 
-##Compatibility Notice
+## Compatibility Notice
 Versions of the module above 1.0.0 utilize the ["modern" Puppet Function Ruby API](https://puppet.com/docs/puppet/latest/functions_ruby_overview.html) and thus
 will not work on older versions of Puppet. Time to really explore upgrading from Puppet 3 I guess :)
 
