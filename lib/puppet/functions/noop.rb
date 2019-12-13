@@ -26,6 +26,9 @@ Puppet::Functions.create_function(:noop, Puppet::Functions::InternalFunction) do
         source: source,
       )
 
+      # Adding this default fixes a corner case with resource collectors
+      @defaults[type][:noop] = noop
+
       # Replace whatever defaults we recieved
       values[:noop] = noop
       values
