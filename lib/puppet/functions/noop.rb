@@ -1,7 +1,7 @@
 Puppet::Functions.create_function(:noop, Puppet::Functions::InternalFunction) do
   dispatch :noop do
     scope_param
-    optional_param 'Boolean', :value
+    optional_param 'Variant[Boolean, Undef]', :value
   end
 
   def noop(scope, value = true)
@@ -13,6 +13,10 @@ Puppet::Functions.create_function(:noop, Puppet::Functions::InternalFunction) do
     when false
       def scope.noop_default
         false
+      end
+    when nil
+      def scope.noop_default
+        nil
       end
     end
 
