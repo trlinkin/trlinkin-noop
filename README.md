@@ -10,7 +10,7 @@ will not work on older versions of Puppet. Time to really explore upgrading from
 
 ## Usage
 
-This is a statement function that accepts one optional Boolean argument. It can be called at any
+This is a statement function that accepts one optional Boolean or Undef argument. It can be called at any
 scope. Its effects will propagate into child scopes.
 
 ```puppet
@@ -34,7 +34,7 @@ class ssh {
 }
 
 class ssh::client {
-  noop(false)
+  noop(undef)
 
   file { '/etc/ssh/ssh_config':
     ensure => file,
@@ -42,11 +42,9 @@ class ssh::client {
 }
 ```
 
-In the above example, none of the resources in `Class['ssh']` will be enforced
-but the resources in Class['ssh::client'] *WILL* be enforced because the
-default noop value is reset to false in the child's scope. Without `noop(false)`
-in `Class['ssh::client']`, the parent scope's default noop value (as set with the `noop()`
-function) would be inherited.
+In the above example, none of the resources in `Class['ssh']` will be enforced. The resources in Class['ssh::client'] *WILL* be enforced, because the default noop value is reset in the child's scope. Without `noop(undef)` in `Class['ssh::client']`, the parent scope's default noop value (as set with the `noop()` function) would be inherited.
+
+Another option would be to call `noop(false)` instead of `noop(undef)` in `Class['ssh::client']`. The difference between these two options is how the resources will behave if Puppet runs with the `--noop` setting or CLI argument. When `noop(undef)` is used to reset the noop default in `Class['ssh::client']`, the CLI `--noop` flag will still work to set these resources to noop. If `noop(false)` is used, however, these resources will never noop—not even when `--noop` is used on the command line.
 
 ## Class interface
 

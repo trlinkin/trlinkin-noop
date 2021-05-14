@@ -9,6 +9,8 @@ describe 'noop' do
 
   it { is_expected.to run.with_params(true) }
 
+  it { is_expected.to run.with_params(nil) }
+
   it { is_expected.to run.with_params('bad_input').and_raise_error(ArgumentError) }
 
   context "should give every resource a default of 'noop => true' when no argument is passed" do
@@ -32,6 +34,14 @@ describe 'noop' do
 
     it {
       expect(catalogue).to contain_file('/tmp/foo').with_noop(true)
+    }
+  end
+
+  context "should clear every resource's noop default when the first argument is undef" do
+    let(:pre_condition) { 'noop(undef); file {"/tmp/foo":}' }
+
+    it {
+      expect(catalogue).to contain_file('/tmp/foo').without_noop
     }
   end
 
