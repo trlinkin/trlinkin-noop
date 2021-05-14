@@ -58,22 +58,65 @@ describe 'noop' do
     # the noop parameter but would fail.
     let(:pre_condition) do
       <<-EOS
-  noop()
+        noop()
 
-  class myclass {
-    file { "/tmp/foo": }
+        class myclass {
+          file { "/tmp/foo": }
 
-    File <| title == "/tmp/foo" |> {
-      ensure => present,
-    }
-  }
+          File <| title == "/tmp/foo" |> {
+            ensure => present,
+          }
+        }
 
-  include myclass
-EOS
+        include myclass
+      EOS
     end
 
     it {
       expect(catalogue).to contain_file('/tmp/foo').with_noop(true)
     }
+  end
+
+  context 'noop(undef)' do
+    let(:pre_condition) do
+      %Q{
+        noop(true)
+
+        file { '/main': }
+
+        class control {
+          file { '/control': }
+        }
+        class ruby {
+          test::call_function_noop('#{ruby_argument}')
+          file { '/ruby': }
+        }
+        class dsl {
+          noop(undef)
+          file { '/dsl': }
+        }
+
+        include control
+        include ruby
+        include dsl
+      }
+    end
+
+    describe 'Ruby `call_function("noop", nil)` is not equivalent to Puppet DSL `noop(undef)`' do
+      let(:ruby_argument) { 'nil' }
+      it { expect(catalogue).to contain_file('/main').with_noop(true) }
+      it { expect(catalogue).to contain_file('/control').with_noop(true) }
+      it { expect(catalogue).to contain_file('/ruby').with_noop(true) }
+      it { expect(catalogue).to contain_file('/dsl').without_noop }
+    end
+
+    describe 'Ruby `call_function("noop", :undef)` is equivalent to Puppet DSL `noop(undef)`' do
+      let(:ruby_argument) { 'undef' }
+      it { expect(catalogue).to contain_file('/main').with_noop(true) }
+      it { expect(catalogue).to contain_file('/control').with_noop(true) }
+      it { expect(catalogue).to contain_file('/ruby').without_noop }
+      it { expect(catalogue).to contain_file('/dsl').without_noop }
+    end
+
   end
 end
