@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Release 1.1.1
+
+**Bugfixes**
+
+- Made `noop(undef)` callable from Ruby functions using `call_function("noop", :undef)`.
+
 ## Release 1.1.0
 
 **Features**
