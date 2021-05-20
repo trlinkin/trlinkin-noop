@@ -14,7 +14,7 @@ Puppet::Functions.create_function(:noop, Puppet::Functions::InternalFunction) do
       def scope.noop_default
         false
       end
-    when nil
+    when :undef, nil
       def scope.noop_default
         nil
       end
