@@ -84,7 +84,7 @@
   "requirements": [
     {
       "name": "puppet",
-      "version_requirement": ">= 4.7.0 < 6.0.0"
+      "version_requirement": ">= 4.7.0 < 8.0.0"
     }
   ],
   "tags": [
@@ -92,7 +92,7 @@
     "parser",
     "function"
   ],
-  "pdk-version": "1.14.0",
-  "template-url": "pdk-default#1.14.0",
-  "template-ref": "1.14.0-0-g1bf3a4e"
+  "pdk-version": "2.5.0",
+  "template-url": "pdk-default#2.5.0",
+  "template-ref": "tags/2.5.0-0-g369d483"
 }

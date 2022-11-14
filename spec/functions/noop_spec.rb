@@ -79,7 +79,7 @@ describe 'noop' do
 
   context 'noop(undef)' do
     let(:pre_condition) do
-      %Q{
+      %{
         noop(true)
 
         file { '/main': }
@@ -104,6 +104,7 @@ describe 'noop' do
 
     describe 'Ruby `call_function("noop", nil)` is not equivalent to Puppet DSL `noop(undef)`' do
       let(:ruby_argument) { 'nil' }
+
       it { expect(catalogue).to contain_file('/main').with_noop(true) }
       it { expect(catalogue).to contain_file('/control').with_noop(true) }
       it { expect(catalogue).to contain_file('/ruby').with_noop(true) }
@@ -112,11 +113,11 @@ describe 'noop' do
 
     describe 'Ruby `call_function("noop", :undef)` is equivalent to Puppet DSL `noop(undef)`' do
       let(:ruby_argument) { 'undef' }
+
       it { expect(catalogue).to contain_file('/main').with_noop(true) }
       it { expect(catalogue).to contain_file('/control').with_noop(true) }
       it { expect(catalogue).to contain_file('/ruby').without_noop }
       it { expect(catalogue).to contain_file('/dsl').without_noop }
     end
-
   end
 end
